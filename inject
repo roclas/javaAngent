@@ -1,0 +1,19 @@
+#!/bin/sh
+exec scala -cp $JAVA_HOME/lib/tools.jar "$0" "$@"
+!#
+
+import com.sun.tools.attach.VirtualMachine
+
+println("\nvirtual machines:")
+VirtualMachine.list().forEach{x=>println(s"${x.id} : ${x.displayName}\n\n")}
+
+if(args.length<1){println("#############\nchoose one of the above processess\n#############");sys.exit(1)}
+val pid=args(0)
+
+println(s"\nexecuting agent in $pid")
+val agentpath="/home/carlos/Desktop/shell/Simple-Java-Agent/simpleagent/target/simple-agent-1.0-SNAPSHOT.jar"
+
+val vm =VirtualMachine.attach(pid)
+//vm.loadAgent(agentpath,"")
+vm.loadAgent(agentpath,"com.roclas.sandbox.simpleagent.MyAgent")
+vm.detach()
