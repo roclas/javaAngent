@@ -5,7 +5,7 @@
 #try:
 	./inject
 #or
-	scala -cp /opt/java/jdk1.8.0_102/lib/tools.jar inject.scala
+	scala -cp $JAVA_HOME/lib/tools.jar inject.scala
 
 
 ########################
